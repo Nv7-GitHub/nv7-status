@@ -3,18 +3,24 @@
 
   let password = "";
   let loading = false;
+  let closebtn: HTMLButtonElement;
+
   async function login() {
     loading = true;
     let uid_req = await fetch(host + "auth", {
       method: "POST",
       body: password,
-  });
-  uid.set(await uid_req.text());
-  loading = false;
+    });
+    if (uid_req.status == 401) {
+      alert("Invalid password");
+      loading = false;
+      return;
+    }
+    uid.set(await uid_req.text());
+    loading = false;
 
-  let closebtn = document.getElementById("close-btn")!;
-  closebtn.click();
-}
+    closebtn.click();
+  }
 </script>
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
@@ -41,7 +47,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Authenticate</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" bind:this={closebtn} aria-label="Close"></button>
       </div>
       <form>
         <div class="modal-body">
