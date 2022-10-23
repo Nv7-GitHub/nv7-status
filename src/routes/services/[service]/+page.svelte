@@ -1,20 +1,27 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { host, services, uid } from '$lib/config';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
 
   let service = $services.find(service => service.id == $page.params.service)!;
   services.subscribe((dat) => {
     service = dat.find(service => service.id == $page.params.service)!;
   })
 
-  // Connection
-  let logs = "";
-  if (browser) {
+  function connect() {
     let socket = new WebSocket("ws" + host.substring(4) + "logs/" + service.id);
     socket.onmessage = (data) => {
       logs += data.data;
     }
+    socket.onclose = () => {
+      connect();
+    }
+  }
+
+  // Connection
+  let logs = "";
+  if (browser) {
+    connect();
   }
 
   async function start() {
