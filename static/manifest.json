@@ -1,0 +1,17 @@
+{
+  "short_name": "nv7-status",
+  "name": "nv7-status",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "logo_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#212529",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0d6efd",
+  "description": "Manage Nv7haven's apps."
+}
