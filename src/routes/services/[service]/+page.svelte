@@ -9,6 +9,7 @@
   })
 
   function connect() {
+    logs = "";
     let socket = new WebSocket("ws" + host.substring(4) + "logs/" + service.id);
     socket.onmessage = (data) => {
       logs += data.data;
